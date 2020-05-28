@@ -27,12 +27,17 @@ class ShopProvider extends Component {
   }
 
   addItemToCheckout = async ( variantId, quantity ) => {
-    const lineItemsToAdd = [{ 
-      variantId,
-      quantity: parseInt( quantity, 10)
-    }];
+    const lineItemsToAdd = [
+      { 
+        variantId,
+        quantity: parseInt( quantity, 10)
+      },
+  ];
 
-    const checkout = await client.checkout.addLineItems(this.checkout.id, lineItemsToAdd)
+    const checkout = await client.checkout.addLineItems(
+      this.state.checkout.id,
+       lineItemsToAdd
+       );
     this.setState({ checkout: checkout })
   }
 
@@ -42,11 +47,17 @@ class ShopProvider extends Component {
   }
 
   fetchProductWithId = async (id) => {
-    const product = await client.fetch(id);
+    const product = await client.product.fetch(id);
     this.setState({ product: product })
   }
 
-  toggleCart = () => { this.setState({ isCartOpen: !this.state.isCartOpen })}
+  closeCart = () => {
+    this.setState({ isCartOpen: false });
+  };
+
+  openCart = () => {
+    this.setState({ isCartOpen: true });
+  };
 
   render() {
     return(
@@ -54,8 +65,9 @@ class ShopProvider extends Component {
         ...this.state,
         fetchAllProducts: this.fetchAllProducts,
         fetchProductWithId: this.fetchProductWithId,
-        toggleCart: this.toggleCart,
-        addItemToCart: this.addItemToCheckout
+        openCart: this.openCart,
+        closeCart: this.closeCart,
+        addItemToCheckout: this.addItemToCheckout
       }}>
         { this.props.children }
       </ShopContext.Provider>
