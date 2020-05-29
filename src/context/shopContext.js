@@ -13,8 +13,7 @@ class ShopProvider extends Component {
     products: [],
     product: [],
     checkout: {},
-    isCartOpen: false,
-    test: 'test'
+    isCartOpen: false
   }
 
   componentDidMount() {

@@ -3,16 +3,17 @@ import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/shopContext';
 import { Text, Div, Button, Row, Col, Container } from 'atomize';
 
+import Dropdown from '../components/Dropdown';
 
 const ProductPage = () => {
 
   let { id } = useParams();
   const { fetchProductWithId, addItemToCheckout, product } = useContext(ShopContext);
-
+  
   useEffect(() => {
     fetchProductWithId(id)
     return () => {
-
+      
     };
   }, [fetchProductWithId, id ]);
 
@@ -27,6 +28,7 @@ const ProductPage = () => {
         <Col>
           <Text>{product.title}</Text>
           <Text>${product.variants[0].price}</Text>
+          <Dropdown />
           <Button 
           onClick={() => addItemToCheckout(product.variants[0].id, 1)}>
             Add To Cart</Button>
